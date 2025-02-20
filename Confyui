@@ -1,0 +1,58 @@
+{
+    "nodes": {
+        "1": {
+            "class_type": "CLIPTextEncode",
+            "inputs": {
+                "text": "A futuristic cityscape at sunset",
+                "clip": "2"
+            }
+        },
+        "2": {
+            "class_type": "CLIPVision",
+            "inputs": {
+                "ckpt_name": "sdxl_1.0.safetensors"
+            }
+        },
+        "3": {
+            "class_type": "KSampler",
+            "inputs": {
+                "model": "2",
+                "seed": 12345,
+                "steps": 30,
+                "cfg": 7.5,
+                "sampler_name": "Euler a",
+                "scheduler": "normal",
+                "denoise": 1.0,
+                "positive": "1",
+                "negative": "4"
+            }
+        },
+        "4": {
+            "class_type": "CLIPTextEncode",
+            "inputs": {
+                "text": "blurry, distorted, low quality",
+                "clip": "2"
+            }
+        },
+        "5": {
+            "class_type": "VAEDecode",
+            "inputs": {
+                "samples": "3",
+                "vae": "6"
+            }
+        },
+        "6": {
+            "class_type": "VAEModelLoader",
+            "inputs": {
+                "ckpt_name": "vae-ft-mse-840000-ema-pruned.ckpt"
+            }
+        },
+        "7": {
+            "class_type": "SaveImage",
+            "inputs": {
+                "images": "5",
+                "filename_prefix": "output_image"
+            }
+        }
+    }
+}
